@@ -1,0 +1,100 @@
+# ARQUITECTURA DE HARNESS Y SKILLS DE IA DEL EQUIPO
+Entorno objetivo: Windows 11 ARM64 (Microsoft Surface) | Shell: PowerShell 7+
+Rutas base: $env:USERPROFILE\.claude\ | $env:USERPROFILE\.claude-code-router\
+
+================================================================================
+NIVEL 0: INFRAESTRUCTURA GLOBAL (INSTALACIÓN OBLIGATORIA EN LAS 4 MÁQUINAS)
+================================================================================
+Propósito: Capa de sistema para optimización de costes, filtrado de contexto y bienvenida. No compite con las skills de rol.
+
+1. Enrutador de Modelos: `@musistudio/claude-code-router` (CCR)
+   - Ruta `background`: Claude Haiku (lectura de archivos, exploración, subagentes).
+   - Ruta `default`: Claude Sonnet (ejecución diaria, código y tareas operativas).
+   - Ruta `think`: Claude Opus (arquitectura, planificación compleja y auditorías).
+2. Filtro de Terminal y Memoria:
+   - `RTK (Rust Token Killer)`: Inicializado como hook global (`rtk init -g`) para comprimir entre un 60% y 90% las salidas de consola, tests y logs de red.
+   - `Context Mode`: Limpieza activa de payloads masivos en la ventana de contexto y preservación de estado tras compactaciones.
+3. Compresión de Salida:
+   - `Caveman`: Configurado globalmente en modo `Lite` (elimina relleno conversacional y cortesías ahorrando tokens de salida, pero preserva el formato de tablas, informes SEO, código y explicaciones claras).
+4. Onboarding Interactivo (Skill interna común):
+   - `empezar` (`~/.claude/skills/empezar/SKILL.md`): Guía interactiva de 3 minutos en español adaptada al rol de cada máquina al ejecutar `/empezar`.
+
+*Nota de Gobernanza Global:* Ninguna máquina instala `find-skill` salvo el Perfil 3 (Arquitectura), que actúa como aduana única auditando cada skill con `NVIDIA Skill Specter` (puntuación mínima exigida: 85/100) antes de distribuirla al resto del equipo.
+
+================================================================================
+PERFIL 1: IT, VÍDEO, RRSS Y SEO (`setup-perfil-1-it-seo-video.ps1`)
+================================================================================
+Rol: Especialista en posicionamiento web/IA, edición de vídeo, redes sociales y soporte IT.
+Herencia: Nivel 0 completo.
+PROHIBIDO INSTALAR: `Graphify`, `Ponytail`, `hola-ai`, `Agent Skills (Addy Osmani)`, `grill-me`.
+
+1. Extracción y Auditoría de Redes Sociales:
+   - `Agent Reach` (`Panniantong/Agent-Reach`): Extracción por CLI de X, Reddit, YouTube, Instagram y LinkedIn (REGLA ESTRICTA: configurar únicamente con cuentas secundarias/burners, nunca corporativas).
+   - `Agent Browser`: Automatización de navegador reservada para inspecciones visuales donde el CLI de `Agent Reach` no sea suficiente.
+2. Posicionamiento y Visibilidad:
+   - `SEO Audit`: Auditoría técnica on-page, estructura semántica y rastreabilidad en buscadores clásicos (Google).
+   - `AI SEO`: Optimización para motores de respuesta generativa (GEO / AIO) y citación en LLMs.
+3. Edición de Vídeo y Animación Programática:
+   - `video-use`: Procesamiento, corte y edición asistida de flujos de vídeo.
+   - `Remotion Skill` + flujo `Lemo Oscar`: Generación y edición de vídeos animados programáticos en React con precisión de fotograma.
+
+================================================================================
+PERFIL 2: DESARROLLADOR ÁGIL, WEB Y AUTOMATIZACIONES (`setup-perfil-2-dev-fast-gas.ps1`)
+================================================================================
+Rol: Desarrollador enfocado en tareas rápidas, mantenimiento web, Google Apps Script (GAS) y automatizaciones.
+Herencia: Nivel 0 completo + CLI global `@google/clasp`.
+PROHIBIDO INSTALAR: `Agent Skills (Addy Osmani)`, `Graphify`, `grill-me`.
+
+1. Flujo de Desarrollo Rápido y Controlado:
+   - `hola-ai` (`nschurmann/hola-ai`): Flujo XP manual (`/backlog` -> `/story` -> `/pair`) para desarrollo paso a paso controlado por test.
+   - `Ponytail` (`DietrichGebert/ponytail`): Modo conciso de un solo diff para arreglos directos y auditoría de deuda técnica (`/ponytail-review`, `/ponytail-audit`).
+   - *Regla de convivencia:* Ejecutar `/ponytail off` antes de iniciar una sesión interactiva con `/pair` (`hola-ai`).
+2. Desarrollo Frontend y Diseño Web:
+   - `frontend-design` (Anthropic oficial): Generación de interfaces modernas evitando el aspecto genérico de IA (sustituye a `anti-ui-slop`).
+   - `web-design-guidelines` (Vercel): Auditoría de más de 100 reglas de UX, accesibilidad y rendimiento frontend.
+   - `canvas-design` (Anthropic oficial): Uso exclusivo para generación de recursos gráficos estáticos, cartelería o PDFs visuales.
+3. Especialidad Google Apps Script (Skill interna autogenerada):
+   - `gas-clasp-automation` (`~/.claude/skills/gas-clasp-automation/SKILL.md`): Obliga a desarrollar localmente en TypeScript con `@types/google-apps-script`, desplegar mediante `clasp push`, aplicar *batching* en lecturas/escrituras de `SpreadsheetApp` para no agotar cuotas y gestionar *triggers* de continuación para no superar el límite de 6 minutos de ejecución de Google.
+
+================================================================================
+PERFIL 3: ARQUITECTURA Y PROYECTOS GRANDES (`setup-perfil-3-dev-enterprise.ps1`)
+================================================================================
+Rol: Desarrollador Principal — Arquitectura de software, proyectos complejos de extremo a extremo, web y gobernanza de IA del equipo.
+Herencia: Nivel 0 completo.
+PROHIBIDO INSTALAR: `Ponytail`, `grill-me` externo, `hola-ai`.
+
+1. Motor de Ingeniería de Grado de Producción (Selección modular de `addyosmani/agent-skills`):
+   - Especificación y Plan: `spec-driven-development` (`/spec`), `interview-me` (interrogatorio nativo de requisitos), `planning-and-task-breakdown` (`/plan`).
+   - Implementación y Pruebas: `incremental-implementation` (`/build`), `test-driven-development` (`/test`), `source-driven-development` (verificación contra documentación oficial), `doubt-driven-development` (validación crítica de arquitectura).
+   - Calidad, Seguridad y Entrega: `code-review-and-quality` (`/review`), `code-simplification` (`/code-simplify`), `security-and-hardening` (OWASP), `shipping-and-launch` (`/ship`).
+2. Alineación, Memoria Estructural y Limpieza de Contexto:
+   - `Andrej Karpathy's Guidelines`: Cumplimiento de los 4 principios base (pensar antes de codificar, simplicidad primero, cambios quirúrgicos y ejecución guiada por objetivos verificables).
+   - `Graphify`: Mapa estructural AST del repositorio para ahorro de tokens en proyectos grandes (configurado con `graphify hook install` para actualización automática en cada commit).
+   - `Handoff`: Empaquetado de estado en Markdown limpio para hacer `/clear` entre las fases `/plan` y `/build` sin perder contexto.
+3. Desarrollo Frontend y Diseño Web:
+   - `frontend-design` (Anthropic oficial) + `web-design-guidelines` (Vercel).
+4. Gobernanza y Seguridad del Equipo (Exclusivo de este perfil):
+   - `skill-creator` (Anthropic oficial): Creación de skills internas con las reglas de negocio de cada proyecto para compartir con el Perfil 2.
+   - `find-skill` + `Skill Specter (NVIDIA)`: Búsqueda y auditoría obligatoria de seguridad/anti-malware (score > 85/100) antes de incorporar nuevas skills al repositorio del equipo.
+
+================================================================================
+PERFIL 4: GENERALISTA OPERATIVO — SISTEMAS, REDES Y AUDITORÍA (`setup-perfil-4-generalista-operativo.ps1`)
+================================================================================
+Rol: Técnico de sistemas/redes, auditoría administrativa de plantillas (Quiter/Drive) y creación de utilidades mediante Vibe Coding puro (usuario no programador).
+Herencia: Nivel 0 completo (con `Caveman` bloqueado en modo `Lite` para garantizar explicaciones en español claro sin jerga de código).
+PROHIBIDO INSTALAR: `hola-ai`, `Ponytail`, `Agent Skills (Addy Osmani)`, `Graphify`, `grill-me`.
+
+1. Manipulación Directa de Documentos y Navegación:
+   - `Anthropic Document Skills` oficiales (`docx`, `pdf`, `xlsx`) + paquetes base de Python (`python-docx`, `pypdf`, `openpyxl`, `pillow`): Lectura y edición directa de plantillas de Word/Drive, facturas/albaranes en PDF exportados de Quiter, hojas de control en Excel e inspección de dimensiones en píxeles de logos incrustados.
+   - `Agent Browser`: Inspección asistida de carpetas en Google Drive, intranets y paneles web de routers/switches/sistemas.
+2. Asistente Todoterreno (Skill interna autogenerada):
+   - `asistente-operativo-it` (`~/.claude/skills/asistente-operativo-it/SKILL.md`), estructurada en 3 módulos de comportamiento:
+     a) Módulo de Auditoría y Corrección de Plantillas (Quiter / Drive):
+        - Cruza datos entre las sedes del grupo (`GR-32 Indese Industriales`, `Indese Turismos`, `GR-22`, `GRT-34`, `GRM-36-37`, `SURDAF-19`, `SALGAR-29`) y sus 4 departamentos (`Taller: oficina de taller`, `Recambios: ventas almacén`, `Comercial: facturas VO turismos`, `Conta: emisión facturas`).
+        - Comprueba NIF, direcciones, teléfonos, datos registrales, tamaños/proporciones de logos y cuentas bancarias IBAN (verificando matemáticamente el dígito de control y asegurando que las cuentas más usadas lleven el asterisco `*`).
+        - Muestra tablas resumen tipo semáforo (✅ Correcto / ❌ Discrepancia) y genera siempre una copia de seguridad (`_backup`) antes de modificar cualquier plantilla.
+     b) Módulo de Soporte de Sistemas y Redes Seguro (Windows 11 ARM64):
+        - Ejecuta diagnósticos de red, DNS, DHCP, VPN, firewall y eventos de Windows estrictamente en modo lectura primero (`Test-NetConnection`, `Get-NetAdapter`, `Get-WinEvent`).
+        - Exige confirmación explícita del usuario explicando el impacto en lenguaje sencillo y utilizando `-WhatIf` en PowerShell antes de modificar configuraciones o reiniciar servicios.
+     c) Módulo de Vibe Coding Transparente:
+        - Cuando el usuario pida una pequeña herramienta o automatización, la IA elige la arquitectura autocontenida más simple, instala lo necesario, ejecuta y corrige cualquier error en silencio, y entrega el archivo o acceso directo listo para usar sin hacer preguntas técnicas de programación.

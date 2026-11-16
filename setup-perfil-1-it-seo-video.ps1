@@ -3,7 +3,7 @@
 .SYNOPSIS
     Aprovisionamiento del PERFIL 1: IT, Vídeo, RRSS y SEO (Windows 11 ARM64 / Surface). Persona: Bruno.
 .DESCRIPTION
-    Instala el Nivel 0 (claude-code-router, RTK, Caveman Lite, Context Mode, /empezar) y las
+    Instala el Nivel 0 (Claude Code con suscripción, RTK, Caveman Lite, Context Mode, /empezar) y las
     skills del perfil: agent-reach, agent-browser, seo-audit, ai-seo, video-use, remotion
     y el plugin lemo-opuscar (lemomo-ai/lemo-opuscar).
     Prohibido en este perfil: graphify, ponytail, hola-ai, Agent Skills (Addy Osmani), grill-me, find-skills.
@@ -32,7 +32,7 @@ $ForbiddenSkills = @(
 )
 $ForbiddenPlugins = @('ponytail@ponytail')
 $NextSteps = @(
-    'Abre una terminal nueva y lanza Claude con el router: ccr code',
+    'Abre una terminal nueva y escribe: claude (la primera vez elige iniciar sesión con tu cuenta de Claude)',
     'Escribe /empezar para la guía de 3 minutos de tu perfil.',
     'Agent Reach: configura SOLO cuentas secundarias (burners) cuando la skill lo pida.',
     'Guía de bolsillo: guias-equipo\GUIA-PERFIL-1-IT-SEO-VIDEO.md'
@@ -45,10 +45,6 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $PSNativeCommandUseErrorActionPreference = $false
 try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
-
-$ModelHaiku  = 'claude-haiku-5-5'
-$ModelSonnet = 'claude-sonnet-5-5'
-$ModelOpus   = 'claude-opus-5-5'
 
 # =============================================================================
 # ELEVACIÓN A ADMINISTRADOR
@@ -460,7 +456,6 @@ function Install-Level0 {
         if (Test-Cli claude) { 'claude ya disponible: ' + (Get-Cli claude) }
         else { Install-NpmGlobal '@anthropic-ai/claude-code' }
     }
-    Invoke-Step 'claude-code-router (@musistudio/claude-code-router)' { Install-NpmGlobal '@musistudio/claude-code-router' }
     Invoke-Step 'RTK (Rust Token Killer)' { Install-Rtk }
     Invoke-Step 'RTK hook global (rtk init -g)' {
         & (Get-Cli rtk) init -g
@@ -473,63 +468,53 @@ function Install-Level0 {
     Invoke-Step 'Skill onboarding /empezar' { Copy-CustomSkill -Source $EmpezarSource -SkillName 'empezar' }
 }
 
-function Read-ApiKey {
-    $prompt = 'Introduce tu API Key de Anthropic (Enter vacío = mantener la actual)'
-    if ($PSVersionTable.PSVersion -ge [version]'7.1') {
-        return [string](Read-Host -Prompt $prompt -MaskInput)
+function Remove-ClaudeCodeRouter {
+    $ErrorActionPreference = 'Continue'
+    $done = @()
+    if (Test-Cli ccr) {
+        & (Get-Cli npm) uninstall -g '@musistudio/claude-code-router' 2>&1 | Out-Null
+        Update-SessionPath
+        $done += 'paquete npm desinstalado'
     }
-    $secure = Read-Host -Prompt $prompt -AsSecureString
-    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
-    try { return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr) }
-    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }
+    $dir = Join-Path $env:USERPROFILE '.claude-code-router'
+    if (Test-Path $dir) {
+        Remove-Item -Path $dir -Recurse -Force
+        $done += "carpeta $dir borrada (guardaba la API Key)"
+    }
+    if ($done.Count -eq 0) { return 'claude-code-router no estaba instalado' }
+    return ($done -join '; ')
 }
 
-function Write-CcrConfig {
-    $dir = Join-Path $env:USERPROFILE '.claude-code-router'
-    $file = Join-Path $dir 'config.json'
-    if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-    $existingKey = ''
-    if (Test-Path $file) {
-        try {
-            $old = Get-Content -Path $file -Raw -Encoding UTF8 | ConvertFrom-Json
-            $prov = @($old.Providers) | Where-Object { $_.name -eq 'anthropic' } | Select-Object -First 1
-            if ($prov) { $existingKey = [string]$prov.api_key }
+function Set-ClaudeSetting {
+    param([string]$Key, [string]$Value)
+    $path = Join-Path $ClaudeHome 'settings.json'
+    $obj = $null
+    if (Test-Path $path) {
+        $raw = Get-Content -Path $path -Raw -Encoding UTF8
+        if ($raw -and $raw.Trim()) {
+            try { $obj = $raw | ConvertFrom-Json } catch { throw "settings.json no es JSON válido; no se modifica ($path)" }
         }
-        catch { Write-Warning 'El config.json existente no se pudo leer; se regenerará.' }
-        Copy-Item -Path $file -Destination ($file + '.bak-' + (Get-Date -Format 'yyyyMMdd-HHmmss')) -Force
+        Copy-Item -Path $path -Destination "$path.bak" -Force
     }
-    $key = (Read-ApiKey).Trim()
-    if (-not $key) {
-        if ($existingKey) { $key = $existingKey; Write-Host '   Se mantiene la API Key existente.' -ForegroundColor Yellow }
-        else { throw 'No se introdujo ninguna API Key. Vuelve a ejecutar el script para configurarla.' }
-    }
-    if ($key -notlike 'sk-ant-*') { Write-Warning 'La clave no empieza por "sk-ant-". Revisa que sea una API Key de Anthropic.' }
-    $config = [ordered]@{
-        LOG            = $false
-        HOST           = '127.0.0.1'
-        PORT           = 3456
-        API_TIMEOUT_MS = 600000
-        Providers      = @(
-            [ordered]@{
-                name         = 'anthropic'
-                api_base_url = 'https://api.anthropic.com/v1/messages'
-                api_key      = $key
-                models       = @($ModelHaiku, $ModelSonnet, $ModelOpus)
-                transformer  = [ordered]@{ use = @('Anthropic') }
-            }
-        )
-        Router         = [ordered]@{
-            default              = "anthropic,$ModelSonnet"
-            background           = "anthropic,$ModelHaiku"
-            think                = "anthropic,$ModelOpus"
-            longContext          = "anthropic,$ModelSonnet"
-            longContextThreshold = 60000
+    if (-not $obj) { $obj = New-Object psobject }
+    if ($obj.PSObject.Properties.Name -contains $Key) { $obj.$Key = $Value }
+    else { $obj | Add-Member -NotePropertyName $Key -NotePropertyValue $Value }
+    Write-Utf8NoBom -Path $path -Content ($obj | ConvertTo-Json -Depth 30)
+}
+
+function Test-ApiKeyVariables {
+    $found = @()
+    foreach ($scope in @('User', 'Machine')) {
+        foreach ($name in @('ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL')) {
+            if ([Environment]::GetEnvironmentVariable($name, $scope)) { $found += "$name ($scope)" }
         }
     }
-    Write-Utf8NoBom -Path $file -Content ($config | ConvertTo-Json -Depth 10)
-    $sid = [Security.Principal.WindowsIdentity]::GetCurrent().User.Value
-    & icacls $file /inheritance:r /grant:r "*${sid}:(F)" /grant:r '*S-1-5-18:(F)' | Out-Null
-    return "config.json generado en $file (background=Haiku, default=Sonnet, think=Opus; acceso solo para tu usuario)"
+    if ($found.Count -gt 0) {
+        $lista = $found -join ', '
+        Write-Warning "Hay variables que hacen que Claude Code cobre por API en vez de usar la suscripción: $lista. Bórralas en Variables de entorno de Windows."
+        return "AVISO: borra estas variables para usar la suscripción: $lista"
+    }
+    return 'sin variables ANTHROPIC_*: Claude Code usará la suscripción'
 }
 
 function Show-BurnerWarning {
@@ -543,8 +528,10 @@ function Show-BurnerWarning {
 }
 
 function Complete-Setup {
-    Write-Section 'Configuración del enrutador de modelos'
-    Invoke-Step 'claude-code-router: config.json y API Key' { Write-CcrConfig }
+    Write-Section 'Cuenta de Claude y modelos'
+    Invoke-Step 'Quitar claude-code-router (ya no se usa)' { Remove-ClaudeCodeRouter }
+    Invoke-Step 'Modelo opusplan: Opus planifica, Sonnet ejecuta' { Set-ClaudeSetting -Key 'model' -Value 'opusplan'; 'model = opusplan en settings.json' }
+    Invoke-Step 'Comprobar que no hay API Key en variables de entorno' { Test-ApiKeyVariables }
 
     Write-Section "RESUMEN - Perfil $PerfilId ($PerfilNombre)"
     $Script:Results | Format-Table -AutoSize -Wrap | Out-Host

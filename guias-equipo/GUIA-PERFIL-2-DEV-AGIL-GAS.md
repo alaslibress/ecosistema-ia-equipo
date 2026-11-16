@@ -5,7 +5,7 @@
 - Descarga de Drive el archivo `setup-perfil-2-dev-fast-gas-Jose.zip` y descomprímelo.
 - Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
 - Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-2-dev-fast-gas.ps1` y acepta el permiso de Administrador.
-- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Cuando termine, abre una terminal nueva y escribe `claude`. La primera vez elige **iniciar sesión con tu cuenta de Claude** (no hace falta API Key).
 - Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
 
 ## 1. Qué hace tu entorno (en 2 frases)
@@ -13,7 +13,7 @@ Arregla y crea webs y automatizaciones de Google Apps Script muy rápido, con un
 Tú eliges el ritmo: diff directo con Ponytail o desarrollo controlado con hola-ai.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Router de modelos**: explorar el código va a Haiku; programar a Sonnet; planificar a Opus. Automático.
+- **Modelo según la tarea**: explorar el código va a Haiku; programar a Sonnet; planificar a Opus. Automático.
 - **Ahorro de tokens**: RTK resume la salida de tests y logs; Caveman Lite quita relleno; Context Mode limpia datos grandes.
 - **Tus skills**:
   - `ponytail` → el cambio más pequeño posible, reutilizando lo que ya existe.
@@ -27,7 +27,7 @@ Tú eliges el ritmo: diff directo con Ponytail o desarrollo controlado con hola-
 ## 3. Cómo usarlo en el día a día
 | Tarea | Escribe esto |
 |---|---|
-| Arrancar | `ccr code` y después `/empezar` |
+| Arrancar | `claude` y después `/empezar` |
 | Arreglo rápido | `Arregla <bug> con el cambio mínimo en un solo diff` |
 | Revisar un diff | `/ponytail-review` |
 | Deuda técnica | `/ponytail-audit` |

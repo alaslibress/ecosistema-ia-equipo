@@ -23,7 +23,7 @@ Guía interactiva en español, máximo 3 minutos. Ve paso a paso y espera respue
 
 ### Paso 1 · Tu entorno en 30 segundos
 Explica en 4 viñetas:
-- **Router de modelos**: tareas fáciles con un modelo rápido y barato; las difíciles con el más potente. Automático.
+- **Modelo según la tarea**: tareas fáciles con un modelo rápido y barato; las difíciles con el más potente. Automático.
 - **Ahorro de tokens**: RTK resume lo que sale por la terminal; Caveman Lite quita relleno de las respuestas sin tocar tablas ni informes.
 - **Tus skills**: Agent Reach (redes), Agent Browser (navegador), SEO Audit, AI SEO, video-use, Remotion y lemo-opuscar (animaciones con estilo).
 - **Regla de oro**: Agent Reach solo con cuentas secundarias.

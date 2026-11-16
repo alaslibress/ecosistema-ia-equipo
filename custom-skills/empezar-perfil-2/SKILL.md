@@ -22,7 +22,7 @@ Guía interactiva en español, máximo 3 minutos. Paso a paso, esperando respues
 ## Flujo
 
 ### Paso 1 · Tu entorno en 30 segundos
-- **Router de modelos**: tareas simples con modelo rápido, código diario con Sonnet, planificación con Opus. Automático.
+- **Modelo según la tarea**: tareas simples con modelo rápido, código diario con Sonnet, planificación con Opus. Automático.
 - **Ahorro de tokens**: RTK comprime la salida de tests y logs; Caveman Lite quita relleno de las respuestas.
 - **Dos modos de trabajo**:
   - *Ponytail* → arreglos directos en un solo diff (`/ponytail-review`, `/ponytail-audit`).

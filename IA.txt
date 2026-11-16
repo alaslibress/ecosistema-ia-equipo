@@ -1,16 +1,16 @@
 # ARQUITECTURA DE HARNESS Y SKILLS DE IA DEL EQUIPO
 Entorno objetivo: Windows 11 ARM64 (Microsoft Surface) | Shell: PowerShell 7+
-Rutas base: $env:USERPROFILE\.claude\ | $env:USERPROFILE\.claude-code-router\
+Rutas base: $env:USERPROFILE\.claude\
 
 ================================================================================
 NIVEL 0: INFRAESTRUCTURA GLOBAL (INSTALACIÓN OBLIGATORIA EN LAS 4 MÁQUINAS)
 ================================================================================
 Propósito: Capa de sistema para optimización de costes, filtrado de contexto y bienvenida. No compite con las skills de rol.
 
-1. Enrutador de Modelos: `@musistudio/claude-code-router` (CCR)
-   - Ruta `background`: Claude Haiku (lectura de archivos, exploración, subagentes).
-   - Ruta `default`: Claude Sonnet (ejecución diaria, código y tareas operativas).
-   - Ruta `think`: Claude Opus (arquitectura, planificación compleja y auditorías).
+1. Modelos: Claude Code con la suscripción de Claude del equipo (sin API Key ni enrutador externo)
+   - `model: opusplan` en settings.json: Claude Opus en modo plan (arquitectura, planificación compleja y auditorías).
+   - Fuera del modo plan: Claude Sonnet (ejecución diaria, código y tareas operativas).
+   - Subagentes de exploración: Claude Haiku (lectura de archivos y exploración), por defecto en Claude Code.
 2. Filtro de Terminal y Memoria:
    - `RTK (Rust Token Killer)`: Inicializado como hook global (`rtk init -g`) para comprimir entre un 60% y 90% las salidas de consola, tests y logs de red.
    - `Context Mode`: Limpieza activa de payloads masivos en la ventana de contexto y preservación de estado tras compactaciones.

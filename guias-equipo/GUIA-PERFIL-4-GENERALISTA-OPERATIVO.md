@@ -5,7 +5,7 @@
 - Descarga de Drive el archivo `setup-perfil-4-generalista-operativo-Javi.zip` y descomprímelo.
 - Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
 - Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-4-generalista-operativo.ps1` y acepta el permiso de Administrador.
-- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Cuando termine, abre una terminal nueva y escribe `claude`. La primera vez elige **iniciar sesión con tu cuenta de Claude** (no hace falta API Key).
 - Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
 
 ## 1. Qué hace tu entorno (en 2 frases)
@@ -24,7 +24,7 @@ Tú hablas normal, en español; él se encarga de la parte técnica.
 ## 3. Cómo usarlo en el día a día
 | Tarea | Escribe esto |
 |---|---|
-| Arrancar | `ccr code` y después `/empezar` |
+| Arrancar | `claude` y después `/empezar` |
 | Auditar una sede | `Audita las plantillas de C:\Plantillas\GR-22 y dame la tabla con ✅ y ❌` |
 | Auditar todas las sedes | `Compara las plantillas de Taller, Recambios, Comercial VO y Conta de todas las sedes de C:\Plantillas` |
 | Revisar cuentas | `Comprueba que los IBAN son correctos y que las cuentas más usadas llevan *` |

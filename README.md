@@ -33,10 +33,11 @@ La arquitectura completa está descrita en [`IA.txt`](IA.txt).
 
 **Nivel 0 (los cuatro perfiles):**
 - Dependencias del sistema con `winget` (prioriza `arm64`, con alternativa `x64`): Git, Node.js LTS, Python 3.12, Rustup y ripgrep.
-- Claude Code CLI y `@musistudio/claude-code-router`:
-  - Ruta `background`: Haiku.
-  - Ruta `default`: Sonnet.
-  - Ruta `think`: Opus.
+- Claude Code CLI con la suscripción de Claude del equipo (sin API Key):
+  - Modelo `opusplan` en `~/.claude/settings.json`: Opus en modo plan, Sonnet para ejecutar.
+  - Los subagentes de exploración usan Haiku (comportamiento por defecto de Claude Code).
+  - Si encuentra `claude-code-router` de una instalación anterior, lo desinstala y borra `%USERPROFILE%\.claude-code-router\` (guardaba la API Key).
+  - Avisa si hay variables `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN` o `ANTHROPIC_BASE_URL`, porque harían que se cobre por API en vez de usar la suscripción.
 - `rtk` (Rust Token Killer) con `rtk init -g`.
 - Caveman en modo `Lite` y Context Mode.
 - La skill `/empezar` del perfil.
@@ -51,8 +52,8 @@ La arquitectura completa está descrita en [`IA.txt`](IA.txt).
    .\setup-perfil-N-xxx.ps1
    ```
    Se eleva solo a Administrador.
-3. Al final pide la API Key de Anthropic (no se muestra al escribirla) y genera `%USERPROFILE%\.claude-code-router\config.json`. Ese archivo solo lo puede leer tu usuario.
-4. Abre una terminal nueva y escribe `ccr code`. Después escribe `/empezar`.
+3. Abre una terminal nueva y escribe `claude`. La primera vez elige iniciar sesión con tu cuenta de Claude (suscripción del equipo). No hace falta API Key.
+4. Escribe `/empezar`.
 
 ### Reparto por Google Drive
 

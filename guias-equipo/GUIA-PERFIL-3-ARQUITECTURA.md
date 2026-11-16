@@ -5,7 +5,7 @@
 - Descarga de Drive el archivo `setup-perfil-3-dev-enterprise-Alex.zip` y descomprímelo.
 - Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
 - Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-3-dev-enterprise.ps1` y acepta el permiso de Administrador.
-- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Cuando termine, abre una terminal nueva y escribe `claude`. La primera vez elige **iniciar sesión con tu cuenta de Claude** (no hace falta API Key).
 - Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
 
 ## 1. Qué hace tu entorno (en 2 frases)
@@ -13,7 +13,7 @@ Lleva proyectos complejos de la idea a producción con especificación, plan, te
 Además es la aduana del equipo: crea y audita las skills antes de que lleguen a los demás perfiles.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Router de modelos**: exploración y subagentes con Haiku; implementación con Sonnet; arquitectura y planes con Opus.
+- **Modelo según la tarea**: exploración y subagentes con Haiku; implementación con Sonnet; arquitectura y planes con Opus.
 - **Ahorro de tokens**: Graphify da un mapa del repo (no lee archivo a archivo); RTK comprime terminal; Context Mode y Handoff mantienen el contexto limpio.
 - **Ciclo de ingeniería (Addy Osmani)**, cada fase con su skill:
   - `/spec` → **qué y por qué**. Escribe la especificación: objetivo, alcance, fuera de alcance y criterios de éxito.
@@ -33,7 +33,7 @@ Además es la aduana del equipo: crea y audita las skills antes de que lleguen a
 ## 3. Cómo usarlo en el día a día
 | Tarea | Escribe esto |
 |---|---|
-| Arrancar | `ccr code` y después `/empezar` |
+| Arrancar | `claude` y después `/empezar` |
 | Idea nueva | `/spec <descripción>` y luego `interview-me` |
 | Plan de tareas | `/plan` |
 | Cambiar de fase sin perder estado | `handoff` → `/clear` → `/build` |

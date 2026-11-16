@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Aprovisionamiento del PERFIL 3: Arquitectura y proyectos grandes (Windows 11 ARM64 / Surface).
+    Aprovisionamiento del PERFIL 3: Arquitectura y proyectos grandes (Windows 11 ARM64 / Surface). Persona: Alex.
 .DESCRIPTION
     Instala el Nivel 0 (claude-code-router, RTK, Caveman Lite, Context Mode, /empezar) y las skills del
     perfil: selección modular de addyosmani/agent-skills, karpathy-guidelines, graphify, handoff,
@@ -24,6 +24,7 @@ param(
 
 $PerfilId       = 3
 $PerfilNombre   = 'Arquitectura y proyectos grandes'
+$PerfilPersona  = 'Alex'
 $EmpezarSource  = 'empezar-perfil-3'
 $CavemanLock    = $false
 $ForbiddenSkills = @('ponytail*', 'grill-me*', 'backlog', 'story', 'pair')
@@ -422,6 +423,8 @@ function Install-Rtk {
 }
 
 function Install-Level0 {
+    Write-Host ''
+    Write-Host "Hola $PerfilPersona, empieza la instalación de tu perfil (Perfil $PerfilId - $PerfilNombre)." -ForegroundColor Cyan
     Write-Section "NIVEL 0 - Infraestructura global (Perfil $PerfilId - $PerfilNombre)"
     if ($IsArm64) { Write-Host 'Arquitectura detectada: ARM64 (se prioriza --architecture arm64)' -ForegroundColor Green }
     else { Write-Host "Arquitectura detectada: $($env:PROCESSOR_ARCHITECTURE) (se usará x64)" -ForegroundColor Yellow }

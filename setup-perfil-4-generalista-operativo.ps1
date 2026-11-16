@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Aprovisionamiento del PERFIL 4: Generalista operativo - Sistemas, redes y auditoría (Windows 11 ARM64 / Surface).
+    Aprovisionamiento del PERFIL 4: Generalista operativo - Sistemas, redes y auditoría (Windows 11 ARM64 / Surface). Persona: Javi.
 .DESCRIPTION
     Instala el Nivel 0 (claude-code-router, RTK, Caveman bloqueado en Lite, Context Mode, /empezar),
     las Document Skills oficiales de Anthropic (docx, pdf, xlsx), los paquetes Python python-docx, pypdf,
@@ -20,6 +20,7 @@ param(
 
 $PerfilId       = 4
 $PerfilNombre   = 'Generalista operativo - Sistemas, redes y auditoría'
+$PerfilPersona  = 'Javi'
 $EmpezarSource  = 'empezar-perfil-4'
 $CavemanLock    = $true
 $ForbiddenSkills = @(
@@ -423,6 +424,8 @@ function Install-Rtk {
 }
 
 function Install-Level0 {
+    Write-Host ''
+    Write-Host "Hola $PerfilPersona, empieza la instalación de tu perfil (Perfil $PerfilId - $PerfilNombre)." -ForegroundColor Cyan
     Write-Section "NIVEL 0 - Infraestructura global (Perfil $PerfilId - $PerfilNombre)"
     if ($IsArm64) { Write-Host 'Arquitectura detectada: ARM64 (se prioriza --architecture arm64)' -ForegroundColor Green }
     else { Write-Host "Arquitectura detectada: $($env:PROCESSOR_ARCHITECTURE) (se usará x64)" -ForegroundColor Yellow }

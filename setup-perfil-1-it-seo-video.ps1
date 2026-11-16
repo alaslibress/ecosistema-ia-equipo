@@ -1,29 +1,26 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Aprovisionamiento del PERFIL 1: IT, Vídeo, RRSS y SEO (Windows 11 ARM64 / Surface).
+    Aprovisionamiento del PERFIL 1: IT, Vídeo, RRSS y SEO (Windows 11 ARM64 / Surface). Persona: Bruno.
 .DESCRIPTION
     Instala el Nivel 0 (claude-code-router, RTK, Caveman Lite, Context Mode, /empezar) y las
-    skills del perfil: agent-reach, agent-browser, seo-audit, ai-seo, video-use y remotion.
+    skills del perfil: agent-reach, agent-browser, seo-audit, ai-seo, video-use, remotion
+    y el plugin lemo-opuscar (lemomo-ai/lemo-opuscar).
     Prohibido en este perfil: graphify, ponytail, hola-ai, Agent Skills (Addy Osmani), grill-me, find-skills.
     Idempotente: se puede relanzar para actualizar.
-.PARAMETER LemoOscarRepo
-    Repositorio GitHub (usuario/repo) que contiene la skill del flujo Lemo Oscar para Remotion.
 .PARAMETER SkipWinget
     Omite la instalación/actualización de paquetes del sistema con winget.
 .EXAMPLE
     .\setup-perfil-1-it-seo-video.ps1
-.EXAMPLE
-    .\setup-perfil-1-it-seo-video.ps1 -LemoOscarRepo "mi-org/lemo-oscar"
 #>
 [CmdletBinding()]
 param(
-    [string]$LemoOscarRepo = '',
     [switch]$SkipWinget
 )
 
 $PerfilId       = 1
 $PerfilNombre   = 'IT, Vídeo, RRSS y SEO'
+$PerfilPersona  = 'Bruno'
 $EmpezarSource  = 'empezar-perfil-1'
 $CavemanLock    = $false
 $ForbiddenSkills = @(
@@ -427,6 +424,8 @@ function Install-Rtk {
 }
 
 function Install-Level0 {
+    Write-Host ''
+    Write-Host "Hola $PerfilPersona, empieza la instalación de tu perfil (Perfil $PerfilId - $PerfilNombre)." -ForegroundColor Cyan
     Write-Section "NIVEL 0 - Infraestructura global (Perfil $PerfilId - $PerfilNombre)"
     if ($IsArm64) { Write-Host 'Arquitectura detectada: ARM64 (se prioriza --architecture arm64)' -ForegroundColor Green }
     else { Write-Host "Arquitectura detectada: $($env:PROCESSOR_ARCHITECTURE) (se usará x64)" -ForegroundColor Yellow }
@@ -603,13 +602,32 @@ Invoke-Step 'Skill video-use (browser-use/video-use)' {
 Invoke-Step 'Skill remotion (remotion-dev/skills)' {
     Install-SkillFromRepo -Repo 'remotion-dev/skills' -SkillName 'remotion' -Candidates @('remotion', 'remotion-best-practices') -AllowRoot
 }
-Invoke-Step 'Flujo Lemo Oscar (Remotion)' {
-    if ($LemoOscarRepo) {
-        Install-SkillFromRepo -Repo $LemoOscarRepo -SkillName 'lemo-oscar' -Candidates @('lemo-oscar', 'lemo', 'oscar') -AllowRoot
+Invoke-Step 'Plugin lemo-opuscar (lemomo-ai/lemo-opuscar, películas animadas en código)' {
+    $ErrorActionPreference = 'Continue'
+    Write-Host ''
+    Write-Host '¡HOLA BRUNO, HAY UNA HERRAMIENTA QUE NO SE HA PROBADO EN SURFACE ARM QUE ESTÁ MÁS PENSADA PARA X64...!' -ForegroundColor Yellow
+    Write-Host '  - Es lemo-opuscar, la herramienta de creación y edición de animaciones de vídeo.' -ForegroundColor Yellow
+    Write-Host '  - Nadie la ha ejecutado todavía en una Surface ARM.' -ForegroundColor Yellow
+    Write-Host '  - Usa ffmpeg (Gyan.FFmpeg), que solo existe para x64. En ARM funciona emulado y puede ir más lento.' -ForegroundColor Yellow
+    Write-Host '  - Necesita Node 20+, ffmpeg 7+ y Python 3.11+. Este script ya los instala.' -ForegroundColor Yellow
+    Write-Host '  - Su instalador interno usa "sh" (Git Bash). Git ya se instala antes.' -ForegroundColor Yellow
+    Write-Host '  - La primera vez que la uses descarga la biblioteca de estilos en %USERPROFILE%\lemo-opuscar.' -ForegroundColor Yellow
+    Write-Host '  - Si algo falla, avisa a quien te pasó el script y adjunta el log de %TEMP%.' -ForegroundColor Yellow
+    $respuesta = Read-Host '¿Instalarla igualmente? (S/N)'
+    if ($respuesta -notmatch '^(s|si|sí)$') {
+        return 'OMITIDO: Bruno decidió no instalar lemo-opuscar. Relanza el script para instalarla más tarde.'
     }
-    else {
-        'OMITIDO: indica el repositorio del flujo con -LemoOscarRepo "usuario/repo" y relanza el script'
+    if (Test-Cli claude) {
+        $claudeCli = Get-Cli claude
+        & $claudeCli plugin marketplace add lemomo-ai/lemo-opuscar 2>&1 | Out-Host
+        & $claudeCli plugin install lemo-opuscar@lemolab 2>&1 | Out-Host
+        if ($LASTEXITCODE -eq 0) { return 'plugin lemo-opuscar instalado (biblioteca en ~/lemo-opuscar al primer uso)' }
+        & $claudeCli plugin marketplace update lemolab 2>&1 | Out-Host
+        & $claudeCli plugin update lemo-opuscar@lemolab 2>&1 | Out-Host
+        if ($LASTEXITCODE -eq 0) { return 'plugin lemo-opuscar actualizado' }
     }
+    # Sin CLI o si falla el plugin: copiar la skill tal cual indica el README del repositorio.
+    Install-SkillFromRepo -Repo 'lemomo-ai/lemo-opuscar' -SkillName 'lemo-opuscar' -Candidates @('lemo-opuscar')
 }
 
 Complete-Setup

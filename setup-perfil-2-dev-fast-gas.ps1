@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Aprovisionamiento del PERFIL 2: Desarrollador ágil, web y automatizaciones GAS (Windows 11 ARM64 / Surface).
+    Aprovisionamiento del PERFIL 2: Desarrollador ágil, web y automatizaciones GAS (Windows 11 ARM64 / Surface). Persona: Jose.
 .DESCRIPTION
     Instala el Nivel 0 (claude-code-router, RTK, Caveman Lite, Context Mode, /empezar), la CLI global
     @google/clasp y las skills del perfil: hola-ai (backlog, story, pair), ponytail, frontend-design,
@@ -20,6 +20,7 @@ param(
 
 $PerfilId       = 2
 $PerfilNombre   = 'Desarrollador ágil, web y GAS'
+$PerfilPersona  = 'Jose'
 $EmpezarSource  = 'empezar-perfil-2'
 $CavemanLock    = $false
 $ForbiddenSkills = @(
@@ -424,6 +425,8 @@ function Install-Rtk {
 }
 
 function Install-Level0 {
+    Write-Host ''
+    Write-Host "Hola $PerfilPersona, empieza la instalación de tu perfil (Perfil $PerfilId - $PerfilNombre)." -ForegroundColor Cyan
     Write-Section "NIVEL 0 - Infraestructura global (Perfil $PerfilId - $PerfilNombre)"
     if ($IsArm64) { Write-Host 'Arquitectura detectada: ARM64 (se prioriza --architecture arm64)' -ForegroundColor Green }
     else { Write-Host "Arquitectura detectada: $($env:PROCESSOR_ARCHITECTURE) (se usará x64)" -ForegroundColor Yellow }

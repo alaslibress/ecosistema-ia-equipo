@@ -54,12 +54,21 @@ La arquitectura completa está descrita en [`IA.txt`](IA.txt).
 3. Al final pide la API Key de Anthropic (no se muestra al escribirla) y genera `%USERPROFILE%\.claude-code-router\config.json`. Ese archivo solo lo puede leer tu usuario.
 4. Abre una terminal nueva y escribe `ccr code`. Después escribe `/empezar`.
 
+### Reparto por Google Drive
+
+En `zips-drive/` hay un `.zip` por persona: Bruno (Perfil 1), Jose (Perfil 2), Alex (Perfil 3) y Javi (Perfil 4). Cada uno lleva el script, las carpetas de `custom-skills/` que usa y un `LEEME.txt` con los pasos. La carpeta no se sube a git: si cambian los scripts o las skills, hay que volver a generar los zips.
+
+Un script descargado de Drive no arranca con doble clic, porque Windows bloquea los scripts descargados de Internet. Ejecútalo así desde la carpeta descomprimida:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup-perfil-N-xxx.ps1
+```
+
 ### Parámetros opcionales
 
 | Script | Parámetro | Uso |
 |---|---|---|
 | Todos | `-SkipWinget` | No instala ni actualiza paquetes del sistema |
-| Perfil 1 | `-LemoOscarRepo "usuario/repo"` | Instala la skill del flujo Lemo Oscar para Remotion |
 | Perfil 3 | `-ProjectPath "C:\ruta\repo"` | Ejecuta `graphify hook install` en ese repositorio |
 
 ### Comportamiento
@@ -78,4 +87,4 @@ La arquitectura completa está descrita en [`IA.txt`](IA.txt).
 
 - Los scripts están validados sintácticamente, pero todavía no se han ejecutado en una Surface real.
 - Las rutas de las skills externas se resuelven buscando su carpeta dentro de cada repositorio. Si una no aparece, ese paso sale como FALLO con el motivo.
-- Falta el repositorio del flujo Lemo Oscar. Hasta tenerlo, ese paso sale como OMITIDO.
+- El flujo de vídeo animado del Perfil 1 es el plugin `lemo-opuscar` ([lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)). Se instala con `claude plugin`; si falla, se copia su skill. Necesita Node 20+, ffmpeg 7+ y Python 3.11+, que el script ya instala con winget. La biblioteca de estilos se descarga en `%USERPROFILE%\lemo-opuscar` al primer uso.

@@ -1,5 +1,13 @@
 # Guía de bolsillo · Perfil 4 — Generalista operativo
 
+## 0. Antes de empezar
+- Hola **Javi**: esta guía es para tu perfil.
+- Descarga de Drive el archivo `setup-perfil-4-generalista-operativo-Javi.zip` y descomprímelo.
+- Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
+- Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-4-generalista-operativo.ps1` y acepta el permiso de Administrador.
+- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
+
 ## 1. Qué hace tu entorno (en 2 frases)
 Revisa y corrige plantillas de Quiter y Drive de todas las sedes, diagnostica problemas de red y sistemas sin riesgos y te fabrica pequeñas herramientas.
 Tú hablas normal, en español; él se encarga de la parte técnica.

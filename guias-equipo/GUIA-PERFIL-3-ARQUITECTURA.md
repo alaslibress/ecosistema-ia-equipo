@@ -1,5 +1,13 @@
 # Guía de bolsillo · Perfil 3 — Arquitectura y proyectos grandes
 
+## 0. Antes de empezar
+- Hola **Alex**: esta guía es para tu perfil.
+- Descarga de Drive el archivo `setup-perfil-3-dev-enterprise-Alex.zip` y descomprímelo.
+- Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
+- Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-3-dev-enterprise.ps1` y acepta el permiso de Administrador.
+- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
+
 ## 1. Qué hace tu entorno (en 2 frases)
 Lleva proyectos complejos de la idea a producción con especificación, plan, tests, revisión de seguridad y entrega.
 Además es la aduana del equipo: crea y audita las skills antes de que lleguen a los demás perfiles.

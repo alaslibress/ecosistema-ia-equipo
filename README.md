@@ -64,6 +64,16 @@ Un script descargado de Drive no arranca con doble clic, porque Windows bloquea 
 powershell -ExecutionPolicy Bypass -File .\setup-perfil-N-xxx.ps1
 ```
 
+### Guías en Word
+
+Los `.docx` de `documentos-google-skills/` se generan desde `guias-equipo/*.md`. Si cambias una guía, vuelve a generarlos:
+
+```powershell
+cd tools
+npm install
+node generar-docx.js
+```
+
 ### Parámetros opcionales
 
 | Script | Parámetro | Uso |

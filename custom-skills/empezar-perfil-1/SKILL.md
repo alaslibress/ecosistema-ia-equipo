@@ -25,7 +25,7 @@ Guía interactiva en español, máximo 3 minutos. Ve paso a paso y espera respue
 Explica en 4 viñetas:
 - **Router de modelos**: tareas fáciles con un modelo rápido y barato; las difíciles con el más potente. Automático.
 - **Ahorro de tokens**: RTK resume lo que sale por la terminal; Caveman Lite quita relleno de las respuestas sin tocar tablas ni informes.
-- **Tus skills**: Agent Reach (redes), Agent Browser (navegador), SEO Audit, AI SEO, video-use y Remotion.
+- **Tus skills**: Agent Reach (redes), Agent Browser (navegador), SEO Audit, AI SEO, video-use, Remotion y lemo-opuscar (animaciones con estilo).
 - **Regla de oro**: Agent Reach solo con cuentas secundarias.
 
 Pregunta: "¿Probamos el primer ejemplo?"
@@ -56,6 +56,15 @@ título "Oferta de la semana", 3 rótulos animados y el logo en la esquina.
 Luego usa video-use para cortar los silencios de grabacion.mp4.
 ```
 Explica: Remotion = vídeo animado hecho con código (precisión de fotograma); video-use = cortar y editar vídeo real.
+
+Después propón la alternativa con estilo visual:
+```
+Con lemo-opuscar haz un vídeo de 30 segundos en estilo acuarela sobre
+nuestra oferta de la semana.
+```
+Explica: lemo-opuscar = animaciones de vídeo hechas con código, con 99 estilos listos (acuarela, óleo, neón, ukiyo-e...). Con `/lemo-opuscar:lemo-opuscar` te enseña los estilos y te pregunta qué quieres hacer.
+Avisa: no está probada en Surface ARM; su ffmpeg va emulado y puede ir lento.
+Si no está instalada (en la instalación se respondió N), dilo y sugiere relanzar el script del perfil.
 
 ### Paso 5 · Cierre
 - Guía de bolsillo: `guias-equipo/GUIA-PERFIL-1-IT-SEO-VIDEO.md`.

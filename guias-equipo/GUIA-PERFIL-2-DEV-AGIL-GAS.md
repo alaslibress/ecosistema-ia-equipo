@@ -1,5 +1,13 @@
 # Guía de bolsillo · Perfil 2 — Desarrollo ágil, web y GAS
 
+## 0. Antes de empezar
+- Hola **Jose**: esta guía es para tu perfil.
+- Descarga de Drive el archivo `setup-perfil-2-dev-fast-gas-Jose.zip` y descomprímelo.
+- Abre la carpeta, pulsa Mayús + clic derecho en un hueco vacío y elige "Abrir en Terminal".
+- Escribe `powershell -ExecutionPolicy Bypass -File .\setup-perfil-2-dev-fast-gas.ps1` y acepta el permiso de Administrador.
+- Cuando termine, abre una terminal nueva y escribe `ccr code`.
+- Escribe `/empezar` y sigue la guía interactiva de 3 minutos.
+
 ## 1. Qué hace tu entorno (en 2 frases)
 Arregla y crea webs y automatizaciones de Google Apps Script muy rápido, con un cambio mínimo o paso a paso guiado por tests.
 Tú eliges el ritmo: diff directo con Ponytail o desarrollo controlado con hola-ai.

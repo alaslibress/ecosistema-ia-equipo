@@ -1,0 +1,7 @@
+{
+  "name": "generar-docx",
+  "private": true,
+  "description": "Genera documentos-google-skills/*.docx desde guias-equipo/*.md",
+  "scripts": { "docx": "node generar-docx.js" },
+  "dependencies": { "docx": "9.5.1" }
+}

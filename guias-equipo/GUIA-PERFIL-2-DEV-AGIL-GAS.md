@@ -13,7 +13,7 @@ Arregla y crea webs y automatizaciones de Google Apps Script muy rápido, con un
 Tú eliges el ritmo: diff directo con Ponytail o desarrollo controlado con hola-ai.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Modelo según la tarea**: explorar el código va a Haiku; programar a Sonnet; planificar a Opus. Automático.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorro de tokens**: RTK resume la salida de tests y logs; Caveman Lite quita relleno; Context Mode limpia datos grandes.
 - **Tus skills**:
   - `ponytail` → el cambio más pequeño posible, reutilizando lo que ya existe.

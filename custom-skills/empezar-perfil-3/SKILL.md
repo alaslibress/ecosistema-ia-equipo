@@ -25,7 +25,7 @@ Guía interactiva en español, unos 3 minutos. Paso a paso, esperando respuesta 
 ## Flujo
 
 ### Paso 1 · Tu entorno en 30 segundos
-- **Modelo según la tarea**: exploración con Haiku, ejecución con Sonnet, arquitectura y planes con Opus. Automático.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorro de tokens**: RTK comprime terminal; Graphify da un mapa del repo para no leer archivo a archivo; Context Mode limpia payloads grandes.
 - **Ciclo de ingeniería** (Addy Osmani): `/spec` → `/plan` → `/build` → `/test` → `/review` → `/ship` (detalle en el Paso 2).
 - **Principios Karpathy**: pensar antes de codificar, simplicidad, cambios quirúrgicos, objetivos verificables.

@@ -11,10 +11,10 @@
 
 ## 1. Qué hace tu entorno (en 2 frases)
 Audita webs para Google y para buscadores con IA, extrae datos de redes sociales y edita o genera vídeo con precisión de fotograma.
-Todo desde una sola conversación en español, con el modelo adecuado para cada tarea y sin gastar de más.
+Todo desde una sola conversación en español, con Opus para planificar, Sonnet para ejecutar y Haiku para explorar.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Modelo según la tarea**: lo fácil (leer archivos, explorar) va a Haiku; el trabajo diario a Sonnet; lo complejo a Opus. Tú no eliges nada.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorro de tokens**: RTK resume lo que sale por la terminal; Context Mode limpia datos enormes; Caveman Lite quita relleno pero respeta tablas e informes SEO.
 - **Tus skills**:
   - `agent-reach` → saca datos de X, Reddit, YouTube, Instagram y LinkedIn.

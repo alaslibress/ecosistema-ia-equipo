@@ -13,7 +13,7 @@ Lleva proyectos complejos de la idea a producción con especificación, plan, te
 Además es la aduana del equipo: crea y audita las skills antes de que lleguen a los demás perfiles.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Modelo según la tarea**: exploración y subagentes con Haiku; implementación con Sonnet; arquitectura y planes con Opus.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorro de tokens**: Graphify da un mapa del repo (no lee archivo a archivo); RTK comprime terminal; Context Mode y Handoff mantienen el contexto limpio.
 - **Ciclo de ingeniería (Addy Osmani)**, cada fase con su skill:
   - `/spec` → **qué y por qué**. Escribe la especificación: objetivo, alcance, fuera de alcance y criterios de éxito.

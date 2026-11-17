@@ -22,7 +22,7 @@ Guía interactiva en español, máximo 3 minutos. Paso a paso, esperando respues
 ## Flujo
 
 ### Paso 1 · Tu entorno en 30 segundos
-- **Modelo según la tarea**: tareas simples con modelo rápido, código diario con Sonnet, planificación con Opus. Automático.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorro de tokens**: RTK comprime la salida de tests y logs; Caveman Lite quita relleno de las respuestas.
 - **Dos modos de trabajo**:
   - *Ponytail* → arreglos directos en un solo diff (`/ponytail-review`, `/ponytail-audit`).

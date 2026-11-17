@@ -67,7 +67,7 @@ powershell -ExecutionPolicy Bypass -File .\setup-perfil-N-xxx.ps1
 
 ### Guías en Word
 
-Los `.docx` de `documentos-google-skills/` se generan desde `guias-equipo/*.md`. Si cambias una guía, vuelve a generarlos:
+Los `.docx` de `documentos-google-skills/` se generan desde `guias-equipo/*.md`, uno por persona (`Bruno-…`, `JoseAlex-…`, `PROYECTOSGRANDES-…`, `javi-…`). Si cambias una guía, vuelve a generarlos:
 
 ```powershell
 cd tools
@@ -96,6 +96,7 @@ node generar-docx.js
 
 ## Estado
 
+- Las cuatro guías (Markdown y `.docx` por persona), las skills `/empezar` de cada perfil y los zips de reparto por Drive están al día con el uso de la suscripción de Claude (sin API Key ni `claude-code-router`).
 - Los scripts están validados sintácticamente, pero todavía no se han ejecutado en una Surface real.
 - Las rutas de las skills externas se resuelven buscando su carpeta dentro de cada repositorio. Si una no aparece, ese paso sale como FALLO con el motivo.
 - El flujo de vídeo animado del Perfil 1 es el plugin `lemo-opuscar` ([lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)). Se instala con `claude plugin`; si falla, se copia su skill. Necesita Node 20+, ffmpeg 7+ y Python 3.11+, que el script ya instala con winget. La biblioteca de estilos se descarga en `%USERPROFILE%\lemo-opuscar` al primer uso.

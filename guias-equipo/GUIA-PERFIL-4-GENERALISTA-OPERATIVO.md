@@ -13,7 +13,7 @@ Revisa y corrige plantillas de Quiter y Drive de todas las sedes, diagnostica pr
 Tú hablas normal, en español; él se encarga de la parte técnica.
 
 ## 2. Cómo lo hace por dentro (sin tecnicismos)
-- **Elige el cerebro adecuado**: uno rápido para cosas sencillas y uno potente para auditorías. Automático.
+- **Modelo según la tarea**: el modo plan (`Shift+Tab`) usa Opus y el trabajo normal usa Sonnet; los subagentes de exploración usan Haiku. En tareas complejas (arquitectura, auditorías, cambios grandes) empieza siempre en modo plan: si nadie lo activa, todo va con Sonnet. Para forzar otro modelo, escribe `/model opus`, `/model sonnet` o `/model haiku`.
 - **Ahorra sin perder claridad**: resume lo que no te sirve y te explica todo en español claro (modo Lite fijo).
 - **Lee tus documentos directamente**: Word, PDF y Excel, incluidos logos y cuentas bancarias.
 - **Asistente operativo IT**:
